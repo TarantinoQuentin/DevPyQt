@@ -6,7 +6,7 @@ class Window(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # TODO Вызовите метод для инициализации интерфейса
+        self.initUi()  # Вызовите метод для инициализации интерфейса
 
     def initUi(self) -> None:
         """
@@ -15,39 +15,39 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        labelLogin = ...  # TODO Создайте виджет QLabel с текстом "Логин"
-        labelRegistration = ...  # TODO Создайте виджет QLabel с текстом "Регистрация"
+        labelLogin = QtWidgets.QLabel('Логин')  # Создайте виджет QLabel с текстом "Логин"
+        labelRegistration = QtWidgets.QLabel('Регистрация')  # Создайте виджет QLabel с текстом "Регистрация"
 
-        self.lineEditLogin = ...  # TODO создайте виджет QLineEdit
-        self.lineEditLogin  # TODO добавьте placeholderText "Введите логин" с помощью метода .setPlaceholderText()
-        self.lineEditPassword = ...  # TODO создайте виджет QLineEdit
-        self.lineEditPassword  # TODO добавьте placeholderText "Введите пароль"
-        self.lineEditPassword  # TODO установите ограничение видимости вводимых знаков с помощью метода .setEchoMode()
+        self.lineEditLogin = QtWidgets.QLineEdit()  # создайте виджет QLineEdit
+        self.lineEditLogin.setPlaceholderText('Введите логин')  # добавьте placeholderText "Введите логин" с помощью метода .setPlaceholderText()
+        self.lineEditPassword = QtWidgets.QLineEdit()  # создайте виджет QLineEdit
+        self.lineEditPassword.setPlaceholderText('Введите пароль')  # добавьте placeholderText "Введите пароль"
+        self.lineEditPassword.setEchoMode(QtWidgets.QLineEdit.Password)  # установите ограничение видимости вводимых знаков с помощью метода .setEchoMode()
 
-        self.pushButtonLogin = ...  # TODO создайте виджет QPushButton
-        self.pushButtonLogin  # TODO установите текст "Войти" с помощью метода setText()
+        self.pushButtonLogin = QtWidgets.QPushButton()  # создайте виджет QPushButton
+        self.pushButtonLogin.setText('Войти')  # установите текст "Войти" с помощью метода setText()
 
-        self.pushButtonRegistration = ...  # TODO создайте виджет QPushButton
-        self.pushButtonRegistration  # TODO установите текст "Регистрация" с помощью метода setText()
+        self.pushButtonRegistration = QtWidgets.QPushButton()  # создайте виджет QPushButton
+        self.pushButtonRegistration.setText('Регистрация')  # установите текст "Регистрация" с помощью метода setText()
 
-        layoutLogin = ...  # TODO Создайте QHBoxLayout
-        layoutLogin  # TODO с помощью метода .addWidget() добавьте labelLogin
-        layoutLogin  # TODO с помощью метода .addWidget() добавьте self.lineEditLogin
+        layoutLogin = QtWidgets.QHBoxLayout()  # Создайте QHBoxLayout
+        layoutLogin.addWidget(labelLogin)  # с помощью метода .addWidget() добавьте labelLogin
+        layoutLogin.addWidget(self.lineEditLogin)  # с помощью метода .addWidget() добавьте self.lineEditLogin
 
-        layoutPassword = ...  # TODO Создайте QHBoxLayout
-        layoutPassword  # TODO с помощью метода .addWidget() добавьте labelRegistration
-        layoutPassword  # TODO с помощью метода .addWidget() добавьте self.lineEditPassword
+        layoutPassword = QtWidgets.QHBoxLayout()  # Создайте QHBoxLayout
+        layoutPassword.addWidget(labelRegistration)  # с помощью метода .addWidget() добавьте labelRegistration
+        layoutPassword.addWidget(self.lineEditPassword)  # с помощью метода .addWidget() добавьте self.lineEditPassword
 
-        layoutButtons = ...  # TODO Создайте QHBoxLayout
-        layoutButtons  # TODO с помощью метода .addWidget() добавьте self.pushButtonLogin
-        layoutButtons  # TODO с помощью метода .addWidget() добавьте self.pushButtonRegistration
+        layoutButtons = QtWidgets.QHBoxLayout()  # Создайте QHBoxLayout
+        layoutButtons.addWidget(self.pushButtonLogin)  # с помощью метода .addWidget() добавьте self.pushButtonLogin
+        layoutButtons.addWidget(self.pushButtonRegistration)  # с помощью метода .addWidget() добавьте self.pushButtonRegistration
 
-        layoutMain = ...  # TODO Создайте QVBoxLayout
-        layoutMain  # TODO с помощью метода .addLayout() добавьте layoutLogin
-        layoutMain  # TODO с помощью метода .addLayout() добавьте layoutPassword
-        layoutMain  # TODO с помощью метода .addLayout() добавьте layoutButtons
+        layoutMain = QtWidgets.QVBoxLayout()  # Создайте QVBoxLayout
+        layoutMain.addLayout(layoutLogin)  # с помощью метода .addLayout() добавьте layoutLogin
+        layoutMain.addLayout(layoutPassword)  # с помощью метода .addLayout() добавьте layoutPassword
+        layoutMain.addLayout(layoutButtons)  # с помощью метода .addLayout() добавьте layoutButtons
 
-        self  # TODO с помощью метода setLayout установите layoutMain на основной виджет
+        self.setLayout(layoutMain)  # с помощью метода setLayout установите layoutMain на основной виджет
 
 
 if __name__ == "__main__":
