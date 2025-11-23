@@ -156,7 +156,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.lineEdit.text())
 
-    def onPushButtonComboBoxClicked(self):
+    def onPushButtonComboBoxClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonComboBox
 
@@ -167,7 +167,7 @@ class Window(QtWidgets.QWidget):
 
     # Самостоятельная реализация слотов для сигналов
 
-    def onPushButtonClearLogClicked(self):
+    def onPushButtonClearLogClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonClearLog
 
@@ -176,7 +176,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.clear()
 
-    def onPushButtonTextEditClicked(self):
+    def onPushButtonTextEditClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonTextEdit
 
@@ -185,7 +185,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.textEdit.toPlainText())
 
-    def onPushButtonPlainTextEditClicked(self):
+    def onPushButtonPlainTextEditClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonPlainTextEdit
 
@@ -194,7 +194,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.plainTextEdit.toPlainText())
 
-    def onPushButtonSpinBoxClicked(self):
+    def onPushButtonSpinBoxClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonSpinBox
 
@@ -203,7 +203,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.spinBox.text())
 
-    def onPushButtonDoubleSpinBoxClicked(self):
+    def onPushButtonDoubleSpinBoxClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonDoubleSpinBox
 
@@ -212,7 +212,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.doubleSpinBox.text())
 
-    def onPushButtonTimeEdit(self):
+    def onPushButtonTimeEdit(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonTimeEdit
 
@@ -221,7 +221,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.timeEdit.text())
 
-    def onPushButtonDateTimeEdit(self):
+    def onPushButtonDateTimeEdit(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonDateTimeEdit
 
@@ -230,7 +230,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.dateTimeEdit.text())
 
-    def onComboBoxCurrentIndexChanged(self):
+    def onComboBoxCurrentIndexChanged(self) -> None:
         """
         Обработка сигнала currentIndexChanged для поля comboBox
 
@@ -239,7 +239,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.comboBox.currentText())
 
-    def onSpinBoxTextChanged(self):
+    def onSpinBoxTextChanged(self) -> None:
         """
         Обработка сигнала textChanged для поля spinBox
 
@@ -248,7 +248,7 @@ class Window(QtWidgets.QWidget):
 
         self.plainTextEditLog.setPlainText(self.spinBox.text())
 
-    def onDateTimeEditDateTimeChanged(self):
+    def onDateTimeEditDateTimeChanged(self) -> None:
         """
         Обработка сигнала dateTimeChanged для поля dateTimeEdit
 
