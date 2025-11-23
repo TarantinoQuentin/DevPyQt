@@ -21,7 +21,7 @@
 """
 
 
-from PySide6 import QtWidgets
+from PySide6 import QtWidgets, QtGui
 from c_signals_events_form import Ui_Form
 
 
@@ -55,6 +55,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.move(0, 0)
 
     def onPushButtonRTClicked(self) -> None:
@@ -63,6 +64,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.move((1920 - self.width()), 0)
 
     def onPushButtonLBClicked(self) -> None:
@@ -71,6 +73,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.move(0, (1200 - self.height()))
 
     def onPushButtonRBClicked(self) -> None:
@@ -79,6 +82,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.move(1920 - self.width(), 1200 - self.height())
 
     def onPushButtonCenterClicked(self) -> None:
@@ -87,7 +91,8 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
-        self.move((960 - self.width()), (600 - self.height()))
+
+        self.move((960 - self.width() // 2), (600 - self.height() // 2))
 
     def onPushButtonMoveCoordsClicked(self) -> None:
         """
@@ -95,6 +100,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.move(self.ui.spinBoxX.value(), self.ui.spinBoxY.value())
 
     def onPushButtonGetDataClicked(self) -> None:
@@ -103,7 +109,58 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
-        self.ui.plainTextEdit.setPlainText()
+
+        plain_text = f"""* Кол-во экранов: {'test'}
+* Текущий основной монитор: {'test'}
+* Разрешение экрана: {'test'}
+* На каком экране окно находится: {'test'}
+* Размеры окна: {self.geometry().width()}x{self.geometry().height()}
+* Минимальные размеры окна: {self.minimumSize().width()}x{self.minimumSize().height()}
+* Текущее положение (координаты) окна: X:{self.geometry().x()}, Y:{self.geometry().y()}
+* Координаты центра приложения: X:{self.geometry().x() + self.width() // 2}, Y:{self.geometry().y() + self.height() // 2}
+* Отслеживание состояния окна (свернуто/развёрнуто/активно/отображено): {self.check_window_state()}"""
+        self.ui.plainTextEdit.setPlainText(plain_text)
+
+    def check_window_state(self) -> str:
+        """
+        Функция для определения состояния окна
+
+        :return: статус окна
+        """
+
+        state = []
+        if self.isMinimized():
+            state.append('свернуто')
+        if self.isMaximized():
+            state.append('развернуто')
+        if self.isActiveWindow():
+            state.append('активно')
+        if self.isVisible():
+            state.append('отображено')
+        return ', '.join(state)
+
+    def moveEvent(self, event: QtGui.QMoveEvent) -> None:
+        """
+        Событие изменения положения окна
+
+        :param event: QtGui.QMoveEvent
+        :return: None
+        """
+
+        print(f'Старое положение окна: X:{event.oldPos().x()}, Y:{event.oldPos().y()}')
+        print(f'Новое положение окна: X:{event.pos().x()}, Y:{event.pos().y()}')
+        print()
+
+    def resizeEvent(self, event: QtGui.QResizeEvent) -> None:
+        """
+        Событие изменения размера окна
+
+        :param event: QtGui.QResizeEvent
+        :return: None
+        """
+
+        print(f'Текущий размер окна: {event.size().width()}x{event.size().height()}')
+        print()
 
 
 if __name__ == "__main__":
