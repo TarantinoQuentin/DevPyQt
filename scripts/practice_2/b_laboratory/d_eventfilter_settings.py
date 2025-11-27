@@ -27,7 +27,7 @@ class Window(QtWidgets.QWidget):
         super().__init__(parent)
 
         self.settings = QtCore.QSettings("VolumeControlApp")
-        self.loadData()
+
 
         l = QtWidgets.QVBoxLayout()
 
@@ -60,6 +60,8 @@ class Window(QtWidgets.QWidget):
         l.addWidget(self.cb)
 
         self.setLayout(l)
+
+        self.loadData()
 
     def onValueChanged(self, value) -> None:
         """
@@ -98,7 +100,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
-        self.dial.setValue(self.settings.value("volume_value", ""))
+        self.dial.setValue(self.settings.value("volume_value", 0))
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         """

@@ -29,6 +29,8 @@ class Window(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.w_sc, self.h_sc = QtWidgets.QApplication.primaryScreen().availableGeometry().size().toTuple()
+        # self.h_sc -= 50
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.initSignals()
@@ -65,7 +67,7 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        self.move((1920 - self.width()), 0)
+        self.move(self.w_sc - self.width(), 0)
 
     def onPushButtonLBClicked(self) -> None:
         """
@@ -74,7 +76,7 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        self.move(0, (1200 - self.height()))
+        self.move(0, self.h_sc - self.height())
 
     def onPushButtonRBClicked(self) -> None:
         """
@@ -83,7 +85,7 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        self.move(1920 - self.width(), 1200 - self.height())
+        self.move(self.w_sc - self.width(), self.h_sc - self.height())
 
     def onPushButtonCenterClicked(self) -> None:
         """
@@ -91,8 +93,8 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
-
-        self.move((960 - self.width() // 2), (600 - self.height() // 2))
+        # w_cen, h_cen = self.rect().center().toTuple()
+        self.move((self.w_sc // 2 - self.width() // 2), (self.h_sc // 2 - self.height() // 2))
 
     def onPushButtonMoveCoordsClicked(self) -> None:
         """
