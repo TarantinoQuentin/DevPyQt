@@ -26,8 +26,17 @@ class Window(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.settings = QtCore.QSettings("VolumeControlApp")
+        self.initUi()
+        self.loadData()
 
+    def initUi(self) -> None:
+        """
+        Инициализация интерфейса
+
+        :return: None
+        """
+
+        self.settings = QtCore.QSettings("VolumeControlApp")
 
         l = QtWidgets.QVBoxLayout()
 
@@ -61,8 +70,6 @@ class Window(QtWidgets.QWidget):
 
         self.setLayout(l)
 
-        self.loadData()
-
     def onValueChanged(self, value) -> None:
         """
         Обработка сигнала ValueChanged для регуляторов dial или slider
@@ -71,6 +78,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.dial.setValue(value)
         self.slider.setValue(value)
         self.lcd.display(value)
@@ -84,6 +92,7 @@ class Window(QtWidgets.QWidget):
         :param watched: QtCore.QObject
         :return: bool
         """
+
         if watched == self.dial and event.type() == QtCore.QEvent.Type.KeyPress:
             if event.key() == QtCore.Qt.Key.Key_Minus:
                 self.dial.setValue(self.dial.value() - 1)
@@ -100,6 +109,7 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+
         self.dial.setValue(self.settings.value("volume_value", 0))
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
