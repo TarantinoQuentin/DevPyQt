@@ -29,7 +29,9 @@ class Window(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        # self.w_screen, self.h_screen = QtWidgets.QApplication.primaryScreen().size().toTuple()  # Для размера экрана
         self.screen_width, self.screen_height = QtWidgets.QApplication.primaryScreen().availableGeometry().size().toTuple()
+        # Для размера экрана с учетом панели задач внизу
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.initSignals()
@@ -111,15 +113,22 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        plain_text = f"""* Кол-во экранов: {'test'}
-* Текущий основной монитор: {'test'}
-* Разрешение экрана: {'test'}
-* На каком экране окно находится: {'test'}
-* Размеры окна: {self.geometry().width()}x{self.geometry().height()}
-* Минимальные размеры окна: {self.minimumSize().width()}x{self.minimumSize().height()}
-* Текущее положение (координаты) окна: X:{self.geometry().x()}, Y:{self.geometry().y()}
-* Координаты центра приложения: X:{self.geometry().x() + self.width() // 2}, Y:{self.geometry().y() + self.height() // 2}
-* Отслеживание состояния окна (свернуто/развёрнуто/активно/отображено): {self.check_window_state()}"""
+        plain_text = f"""
+        * Кол-во экранов: {len(QtWidgets.QApplication.screens())}
+        * Текущий основной монитор: {QtWidgets.QApplication.primaryScreen().name()}
+        * Разрешение экрана: {self.screen_width}x{self.screen_height}
+        * На каком экране окно находится: {self.screen().name()}
+        * Размеры окна: {self.geometry().width()}x{self.geometry().height()}
+        * Минимальные размеры окна: {self.minimumSize().width()}x{self.minimumSize().height()}
+        * Текущее положение (координаты) окна: X:{self.geometry().x()}, Y:{self.geometry().y()}
+        * Координаты центра приложения: X:{self.geometry().x() + self.width() // 2}, Y:{self.geometry().y() + self.height() // 2}
+        * Отслеживание состояния окна (свернуто/развёрнуто/активно/отображено): {self.check_window_state()}
+        """
+        # Размеры окна: {self.size().width()x{self.size().height()}
+        # Текущее положение (координаты) окна: {self.x()}, {self.y()}
+        # Текущее положение (координаты) окна: {self.pos().toTuple()}
+        # Координаты центра приложения: {self.rect().center().toTuple()}
+
         self.ui.plainTextEdit.setPlainText(plain_text)
 
     def check_window_state(self) -> str:
@@ -162,6 +171,17 @@ class Window(QtWidgets.QWidget):
 
         print(f'Текущий размер окна: {event.size().width()}x{event.size().height()}')
         print()
+
+    # def resizeEvent(self, event, /):
+    # """
+    # Событие изменения размера окна
+    #
+    # :param event: QtGui.QResizeEvent
+    # :return: None
+    # """
+
+    #     print(self.size())
+    #     return super().resizeEvent(event)
 
 
 if __name__ == "__main__":

@@ -110,7 +110,8 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        self.dial.setValue(self.settings.value("volume_value", 0))
+        self.dial.setValue(self.settings.value('volume_value', 0))
+        self.cb.setCurrentIndex(self.settings.value('combo_box_value', 0))
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         """
@@ -120,7 +121,8 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        self.settings.setValue("volume_value", self.dial.value())
+        self.settings.setValue('volume_value', self.dial.value())
+        self.settings.setValue('combo_box_value', self.cb.currentIndex())
 
 
 if __name__ == "__main__":
