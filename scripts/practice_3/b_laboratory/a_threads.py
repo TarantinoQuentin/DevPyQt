@@ -91,14 +91,18 @@ class Window(QtWidgets.QMainWindow):
 
         # self.ui.pushButton.clicked.connect(self.runLongProcess)
 
-
         self.ui.pushButton.clicked.connect(self.weather_api_app.start)
         self.weather_api_app.received_weather_data.connect(self.weather_api_updated)
 
         self.ui.pushButton_2.clicked.connect(self.system_info_app.start)
         self.system_info_app.systemInfoReceived.connect(self.system_info_updated)
 
-    def weather_api_updated(self, data: dict) -> None:
+    def weather_api_updated(self, data: list) -> None:
+        """
+        Метод для вывода полученных значений в лог
+
+        :return: None
+        """
 
         def get_wind_direction():
             degrees = data['current_weather']['winddirection']
@@ -135,10 +139,6 @@ class Window(QtWidgets.QMainWindow):
                   f'CPU: {data[0]}\n'
                   f'RAM: {data[1]}')
         self.ui.plainTextEdit_2.setPlainText(result)
-
-
-
-
 
 
 if __name__ == "__main__":

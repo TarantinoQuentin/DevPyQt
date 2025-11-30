@@ -12,8 +12,6 @@
 реагировать на изменение времени задержки
 """
 
-import time
-import psutil
 from PySide6 import QtWidgets, QtCore
 from a_threads import SystemInfo
 
@@ -47,7 +45,7 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        lableDelay = QtWidgets.QLabel('Время задержки')
+        labelDelay = QtWidgets.QLabel('Время задержки')
 
         self.pushButtonDelay = QtWidgets.QPushButton('Установить\nвремя задержки')
         self.pushButtonDelay.setFixedSize(110, 60)
@@ -55,29 +53,29 @@ class Window(QtWidgets.QWidget):
         self.lineEditDelay.setPlaceholderText('Введите время')
 
         layoutDelayline = QtWidgets.QHBoxLayout()
-        layoutDelayline.addWidget(lableDelay)
+        layoutDelayline.addWidget(labelDelay)
         layoutDelayline.addWidget(self.lineEditDelay)
 
         layoutDelayBlock = QtWidgets.QVBoxLayout()
         layoutDelayBlock.addLayout(layoutDelayline)
-        layoutDelayBlock.addWidget(self.pushButtonDelay)
+        layoutDelayBlock.addWidget(self.pushButtonDelay, alignment=QtCore.Qt.AlignmentFlag.AlignHCenter)
 
 
         self.groupBoxSystemData = QtWidgets.QGroupBox()
         self.groupBoxSystemData.setTitle('Данные загрузки системы')
-        lableRAM = QtWidgets.QLabel('Загрузка RAM')
-        lableCPU = QtWidgets.QLabel('Загрузка CPU')
+        labelRAM = QtWidgets.QLabel('Загрузка RAM')
+        labelCPU = QtWidgets.QLabel('Загрузка CPU')
         self.lcdNumberRAM = QtWidgets.QLCDNumber()
         self.lcdNumberRAM.setMinimumSize(100, 100)
         self.lcdNumberCPU = QtWidgets.QLCDNumber()
         self.lcdNumberCPU.setMinimumSize(100, 100)
 
         layoutRAM = QtWidgets.QVBoxLayout()
-        layoutRAM.addWidget(lableRAM)
+        layoutRAM.addWidget(labelRAM)
         layoutRAM.addWidget(self.lcdNumberRAM)
 
         layoutCPU = QtWidgets.QVBoxLayout()
-        layoutCPU.addWidget(lableCPU)
+        layoutCPU.addWidget(labelCPU)
         layoutCPU.addWidget(self.lcdNumberCPU)
 
         layoutSystemData = QtWidgets.QVBoxLayout()
