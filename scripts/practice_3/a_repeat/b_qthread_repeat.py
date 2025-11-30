@@ -58,19 +58,24 @@ class Window(QtWidgets.QWidget):
         self.pushButtonHandle.clicked.connect(self.__handleMainThread)
 
     def __handleMainThread(self, status):
-        # TODO проверка url
-        self.pushButtonHandle.setText("Стоп" if status else "Старт")
 
-        if not status:
-            self.thread.stop()
+        # проверка url
+        if self.lineEditUrl.text()[:7] == 'http://' or self.lineEditUrl.text()[:8] == 'https://':
+
+            self.pushButtonHandle.setText("Стоп" if status else "Старт")
+
+            if not status:
+                self.thread.stop()
+            else:
+                self.thread = MainThread(self.lineEditUrl.text())
+                self.thread.started.connect(lambda: self.appendLogMessage("Поток запущен"))
+                self.thread.checked.connect(lambda data: self.appendLogMessage(f"Статус код: {data}"))
+                self.thread.finished.connect(lambda: self.appendLogMessage("Поток остановлен"))
+                self.thread.finished.connect(lambda: self.pushButtonHandle.setChecked(False))
+                self.thread.finished.connect(lambda: self.pushButtonHandle.setText("Старт"))
+                self.thread.start()
         else:
-            self.thread = MainThread(self.lineEditUrl.text())
-            self.thread.started.connect(lambda: self.appendLogMessage("Поток запущен"))
-            self.thread.checked.connect(lambda data: self.appendLogMessage(f"Статус код: {data}"))
-            self.thread.finished.connect(lambda: self.appendLogMessage("Поток остановлен"))
-            self.thread.finished.connect(lambda: self.pushButtonHandle.setChecked(False))
-            self.thread.finished.connect(lambda: self.pushButtonHandle.setText("Старт"))
-            self.thread.start()
+            self.appendLogMessage(f"Неверный URL адрес")
 
     def appendLogMessage(self, text):
         self.plainTextEditLog.appendPlainText(f"{time.ctime()} >>> {text}")
