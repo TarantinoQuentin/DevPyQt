@@ -125,9 +125,9 @@ class Window(QtWidgets.QMainWindow):
             else:
                 return "Неизвестное направление"
 
-        result = (f'Время последнего обновления: {datetime.fromisoformat(data['current_weather']['time'])}\n'
-                  f'Температура: {data['current_weather']['temperature']} °C\n'
-                  f'Скорость ветра: {round((data['current_weather']['windspeed'] / 3.6), 1)} м/с\n'
+        result = (f'Время последнего обновления: {datetime.fromisoformat(data["current_weather"]["time"])}\n'
+                  f'Температура: {data["current_weather"]["temperature"]} °C\n'
+                  f'Скорость ветра: {round((data["current_weather"]["windspeed"] / 3.6), 1)} м/с\n'
                   f'Направление ветра: {get_wind_direction()}')
 
         self.ui.plainTextEdit.setPlainText(f"Обновлено: {time.ctime()}\n{result}")
