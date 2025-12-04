@@ -18,7 +18,7 @@ from a_threads import WeatherHandler
 
 class ExtendedWeatherHandler(WeatherHandler):
 
-    def __init__(self, lat, lon):
+    def __init__(self, lat=0, lon=0):
         super().__init__(lat, lon)
 
     def set_longitude_and_latitude(self, lon: float, lat: float) -> None:
@@ -38,7 +38,7 @@ class ExtendedWeatherHandler(WeatherHandler):
         :return: None
         """
 
-        super().__status = False
+        self.__status = False
 
 
 class Window(QtWidgets.QWidget):
@@ -47,6 +47,7 @@ class Window(QtWidgets.QWidget):
         super().__init__(parent)
 
         self.initUi()
+        self.weather_api_app = ExtendedWeatherHandler()
         # self.initThreads()
         self.initSignals()
 
@@ -61,6 +62,7 @@ class Window(QtWidgets.QWidget):
         labelLongitude = QtWidgets.QLabel('Долгота')
         self.spinBoxLatitude = QtWidgets.QDoubleSpinBox()
         self.spinBoxLatitude.setValue(59.57)
+        self.spinBoxLatitude.setSingleStep(0.01)
         self.spinBoxLongitude = QtWidgets.QDoubleSpinBox()
         self.spinBoxLongitude.setValue(30.19)
 
@@ -139,7 +141,7 @@ class Window(QtWidgets.QWidget):
         if not status:
             self.weather_api_app.stop()
         else:
-            self.weather_api_app = ExtendedWeatherHandler(lon=self.spinBoxLongitude.value(),
+            self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
                                                             lat=self.spinBoxLatitude.value())
             self.weather_api_app.setDelay(int(self.lineEditDelay.text()))
             # self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
@@ -179,9 +181,9 @@ class Window(QtWidgets.QWidget):
             else:
                 return "Неизвестное направление"
 
-        result = (f'Время последнего обновления: {datetime.fromisoformat(data['current_weather']['time'])}\n'
-                  f'Температура: {data['current_weather']['temperature']} °C\n'
-                  f'Скорость ветра: {round((data['current_weather']['windspeed'] / 3.6), 1)} м/с\n'
+        result = (f"Время последнего обновления: {datetime.fromisoformat(data['current_weather']['time'])}\n"
+                  f"Температура: {data['current_weather']['temperature']} °C\n"
+                  f"Скорость ветра: {round((data['current_weather']['windspeed'] / 3.6), 1)} м/с\n"
                   f'Направление ветра: {get_wind_direction()}')
 
         self.plainTextEditLog.setPlainText(f"Обновлено: {time.ctime()}\n\n"
