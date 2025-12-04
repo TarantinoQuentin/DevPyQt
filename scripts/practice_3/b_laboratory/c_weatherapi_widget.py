@@ -65,6 +65,7 @@ class Window(QtWidgets.QWidget):
         self.spinBoxLatitude.setSingleStep(0.01)
         self.spinBoxLongitude = QtWidgets.QDoubleSpinBox()
         self.spinBoxLongitude.setValue(30.19)
+        self.spinBoxLongitude.setSingleStep(0.01)
 
         layoutLatitude = QtWidgets.QHBoxLayout()
         layoutLatitude.addWidget(labelLatitude)
@@ -189,7 +190,6 @@ class Window(QtWidgets.QWidget):
         self.plainTextEditLog.setPlainText(f"Обновлено: {time.ctime()}\n\n"
                                            f"Координаты:\nВысота — {self.weather_api_app.lat}\nДолгота — {self.weather_api_app.lat}\n\n"
                                            f"{result}\n")
-
 
 
 if __name__ == "__main__":

@@ -108,9 +108,7 @@ class MainThread(QtCore.QThread):
             except Exception:
                 traceback.print_exc()
                 self.stop()
-                print('Поток остановлен из ошибки')
-
-
+                print('Ошибка, поток остановлен')
 
 
 if __name__ == "__main__":
