@@ -38,7 +38,7 @@ class ExtendedWeatherHandler(WeatherHandler):
         :return: None
         """
 
-        self.__status = False
+        self.set_status(False)
 
 
 class Window(QtWidgets.QWidget):
@@ -123,9 +123,9 @@ class Window(QtWidgets.QWidget):
         self.weather_api_app.received_weather_data.connect(lambda data: self.weather_api_updated(data))
         self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setChecked(False))
         self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setText('Установить значения и\nзапустить программу'))
-        self.spinBoxLongitude.setEnabled(True)
-        self.spinBoxLatitude.setEnabled(True)
-        self.lineEditDelay.setEnabled(True)
+        self.weather_api_app.finished.connect(lambda: self.spinBoxLongitude.setEnabled(True))
+        self.weather_api_app.finished.connect(lambda: self.spinBoxLatitude.setEnabled(True))
+        self.weather_api_app.finished.connect(lambda: self.lineEditDelay.setEnabled(True))
 
     def initSignals(self) -> None:
         """

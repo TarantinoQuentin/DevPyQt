@@ -58,6 +58,15 @@ class WeatherHandler(QtCore.QThread):
             self.received_weather_data.emit(data)
             self.sleep(self.__delay)
 
+    def set_status(self, status: bool) -> None:
+        """
+        Метод-сеттер для безопасного изменения закрытого атрибута status
+
+        :return: None
+        """
+
+        self.__status = status
+
 
 class Window(QtWidgets.QMainWindow):
 
