@@ -67,6 +67,15 @@ class WeatherHandler(QtCore.QThread):
 
         self.__status = status
 
+    def set_api_url(self, lat: float, lon: float) -> None:
+        """
+        Метод-сеттер для безопасного изменения закрытого атрибута api_url
+
+        :return: None
+        """
+
+        self.__api_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
+
 
 class Window(QtWidgets.QMainWindow):
 

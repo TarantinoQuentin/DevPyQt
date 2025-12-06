@@ -18,18 +18,17 @@ from a_threads import WeatherHandler
 
 class ExtendedWeatherHandler(WeatherHandler):
 
-    def __init__(self, lat=0, lon=0):
+    def __init__(self, lat=59.57, lon=30.19):
         super().__init__(lat, lon)
 
-    def set_longitude_and_latitude(self, lon: float, lat: float) -> None:
+    def set_longitude_and_latitude(self, lat: float, lon: float) -> None:
         """
         Метод для ручной установки высоты и долготы
 
         :return: None
         """
 
-        self.lon = lon
-        self.lat = lat
+        self.set_api_url(lat, lon)
 
     def stop(self) -> None:
         """
@@ -41,7 +40,7 @@ class ExtendedWeatherHandler(WeatherHandler):
         self.set_status(False)
 
 
-class Window(QtWidgets.QWidget):
+class WeatherWidget(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -144,8 +143,8 @@ class Window(QtWidgets.QWidget):
         """
 
         if not self.weather_api_app.isRunning():
-            self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
-                                                            lat=self.spinBoxLatitude.value())
+            self.weather_api_app.set_longitude_and_latitude(lat=self.spinBoxLatitude.value(),
+                                                            lon=self.spinBoxLongitude.value())
             self.weather_api_app.setDelay(int(self.lineEditDelay.text()))
             self.pushButtonSetData.setText("Стоп")
             self.weather_api_app.start()
@@ -154,23 +153,6 @@ class Window(QtWidgets.QWidget):
             self.lineEditDelay.setEnabled(False)
         else:
             self.weather_api_app.stop()
-
-        # self.pushButtonSetData.setText('Стоп' if status else 'Установить значения и\nзапустить программу')
-
-        # if not status:
-        #     self.weather_api_app.stop()
-        # else:
-        #     self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
-        #                                                     lat=self.spinBoxLatitude.value())
-        #     self.weather_api_app.setDelay(int(self.lineEditDelay.text()))
-        #     # self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
-        #     #                                                 lat=self.spinBoxLatitude.value())
-        #
-        #     self.weather_api_app.received_weather_data.connect(self.weather_api_updated)
-        #     self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setText('Установить значения и\nзапустить программу'))
-        #     self.weather_api_app.start()
-
-
 
     def weather_api_updated(self, data: dict) -> None:
         """
@@ -206,14 +188,14 @@ class Window(QtWidgets.QWidget):
                   f'Направление ветра: {get_wind_direction()}')
 
         self.plainTextEditLog.setPlainText(f"Обновлено: {time.ctime()}\n\n"
-                                           f"Координаты:\nВысота — {self.weather_api_app.lat}\nДолгота — {self.weather_api_app.lat}\n\n"
+                                           f"Координаты:\nВысота — {self.spinBoxLatitude.value()}\nДолгота — {self.spinBoxLongitude.value()}\n\n"
                                            f"{result}\n")
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
 
-    window = Window()
+    window = WeatherWidget()
     window.show()
 
     app.exec()
