@@ -47,9 +47,8 @@ class Window(QtWidgets.QWidget):
         super().__init__(parent)
 
         self.initUi()
-        self.weather_api_app = ExtendedWeatherHandler()
-        # self.initThreads()
         self.initSignals()
+        self.initThreads()
 
     def initUi(self) -> None:
         """
@@ -96,6 +95,7 @@ class Window(QtWidgets.QWidget):
         self.groupBoxDelay.setLayout(layoutDelay)
 
         self.pushButtonSetData = QtWidgets.QPushButton('Установить значения и\nзапустить программу')
+        self.pushButtonSetData.setCheckable(True)
 
         layoutSetData = QtWidgets.QVBoxLayout()
         layoutSetData.addWidget(self.groupBoxCoordinates)
@@ -112,14 +112,20 @@ class Window(QtWidgets.QWidget):
         self.setWindowTitle('Weather App')
         self.resize(650, 200)
 
-    # def initThreads(self) -> None:
-    #     """
-    #     Инициализация сигналов
-    #
-    #     :return: None
-    #     """
-    #
-    #     self.weather_api_app = ExtendedWeatherHandler(0, 0)
+    def initThreads(self) -> None:
+        """
+        Инициализация потоков
+
+        :return: None
+        """
+
+        self.weather_api_app = ExtendedWeatherHandler()
+        self.weather_api_app.received_weather_data.connect(lambda data: self.weather_api_updated(data))
+        self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setChecked(False))
+        self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setText('Установить значения и\nзапустить программу'))
+        self.spinBoxLongitude.setEnabled(True)
+        self.spinBoxLatitude.setEnabled(True)
+        self.lineEditDelay.setEnabled(True)
 
     def initSignals(self) -> None:
         """
@@ -130,27 +136,39 @@ class Window(QtWidgets.QWidget):
 
         self.pushButtonSetData.clicked.connect(self.onPushButtonSetData)
 
-    def onPushButtonSetData(self, status) -> None:
+    def onPushButtonSetData(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonSetData
 
         :return: None
         """
 
-        self.pushButtonSetData.setText('Стоп' if status else 'Установить значения и\nзапустить программу')
-
-        if not status:
-            self.weather_api_app.stop()
-        else:
+        if not self.weather_api_app.isRunning():
             self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
                                                             lat=self.spinBoxLatitude.value())
             self.weather_api_app.setDelay(int(self.lineEditDelay.text()))
-            # self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
-            #                                                 lat=self.spinBoxLatitude.value())
-
-            self.weather_api_app.received_weather_data.connect(self.weather_api_updated)
-            self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setText('Установить значения и\nзапустить программу'))
+            self.pushButtonSetData.setText("Стоп")
             self.weather_api_app.start()
+            self.spinBoxLongitude.setEnabled(False)
+            self.spinBoxLatitude.setEnabled(False)
+            self.lineEditDelay.setEnabled(False)
+        else:
+            self.weather_api_app.stop()
+
+        # self.pushButtonSetData.setText('Стоп' if status else 'Установить значения и\nзапустить программу')
+
+        # if not status:
+        #     self.weather_api_app.stop()
+        # else:
+        #     self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
+        #                                                     lat=self.spinBoxLatitude.value())
+        #     self.weather_api_app.setDelay(int(self.lineEditDelay.text()))
+        #     # self.weather_api_app.set_longitude_and_latitude(lon=self.spinBoxLongitude.value(),
+        #     #                                                 lat=self.spinBoxLatitude.value())
+        #
+        #     self.weather_api_app.received_weather_data.connect(self.weather_api_updated)
+        #     self.weather_api_app.finished.connect(lambda: self.pushButtonSetData.setText('Установить значения и\nзапустить программу'))
+        #     self.weather_api_app.start()
 
 
 

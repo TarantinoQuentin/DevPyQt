@@ -74,7 +74,7 @@ class Window(QtWidgets.QMainWindow):
 
     def initThreads(self) -> None:
         """
-        Инициализация сигналов
+        Инициализация потоков
 
         :return: None
         """
